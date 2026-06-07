@@ -16,7 +16,7 @@
 | Phase    | ชื่อ                                | สถานะ   |
 | -------- | ----------------------------------- | ------- |
 | Phase 1  | Project Bootstrap & Tooling         | ✅ done |
-| Phase 2  | FSD Folder Structure + Shared Layer | ⬜ todo |
+| Phase 2  | FSD Folder Structure + Shared Layer | ✅ done |
 | Phase 3  | Entities & Data Layer (Sheets API)  | ⬜ todo |
 | Phase 4  | Pages — Dashboard                   | ⬜ todo |
 | Phase 5  | Pages — Map View                    | ⬜ todo |
@@ -253,7 +253,7 @@ VITE_LINE_CHANNEL_ACCESS_TOKEN=your-token
 
 ### 2.1 สร้าง folder skeleton ทั้งหมด
 
-- [ ] สร้าง directories ตาม FSD structure:
+- [x] สร้าง directories ตาม FSD structure:
 
 ```
 src/
@@ -279,7 +279,7 @@ src/
 
 ### 2.2 สร้าง shared/config
 
-- [ ] สร้าง `src/shared/config/env.ts`:
+- [x] สร้าง `src/shared/config/env.ts`:
 
 ```ts
 export const env = {
@@ -289,7 +289,7 @@ export const env = {
 } as const;
 ```
 
-- [ ] สร้าง `src/shared/config/liff.ts`:
+- [x] สร้าง `src/shared/config/liff.ts`:
 
 ```ts
 export const LIFF_CONFIG = {
@@ -297,37 +297,37 @@ export const LIFF_CONFIG = {
 };
 ```
 
-- [ ] สร้าง `src/shared/config/index.ts` (re-export)
+- [x] สร้าง `src/shared/config/index.ts` (re-export)
 
 ### 2.3 สร้าง shared/lib utilities
 
-- [ ] สร้าง `src/shared/lib/format-date.ts`
-- [ ] สร้าง `src/shared/lib/vehicle-colors.ts` — color/icon map ต่อ VehicleType
-- [ ] สร้าง `src/shared/lib/cn.ts` — `clsx` + `tailwind-merge` wrapper
+- [x] สร้าง `src/shared/lib/format-date.ts`
+- [x] สร้าง `src/shared/lib/vehicle-colors.ts` — color/icon map ต่อ VehicleType
+- [x] สร้าง `src/shared/lib/cn.ts` — `clsx` + `tailwind-merge` wrapper
 
 ### 2.4 สร้าง shared/ui components
 
-- [ ] สร้าง `src/shared/ui/stat-card/StatCard.tsx`
-- [ ] สร้าง `src/shared/ui/index.ts` (re-export shadcn + custom)
+- [x] สร้าง `src/shared/ui/stat-card/StatCard.tsx`
+- [x] สร้าง `src/shared/ui/index.ts` (re-export shadcn + custom)
 
 ### 2.5 Setup app providers
 
-- [ ] สร้าง `src/app/providers/query-provider.tsx` — TanStack Query QueryClientProvider
-- [ ] สร้าง `src/app/providers/liff-provider.tsx` — init LIFF, gate render จนกว่า ready
-- [ ] สร้าง `src/app/providers/index.tsx` — compose providers
+- [x] สร้าง `src/app/providers/query-provider.tsx` — TanStack Query QueryClientProvider
+- [x] สร้าง `src/app/providers/liff-provider.tsx` — init LIFF, gate render จนกว่า ready
+- [x] สร้าง `src/app/providers/index.tsx` — compose providers
 
 ### 2.6 Setup TanStack Router routes skeleton
 
-- [ ] สร้าง `src/routes/__root.tsx` — root layout + `<Outlet />`
-- [ ] สร้าง `src/routes/index.tsx` → DashboardPage
-- [ ] สร้าง `src/routes/map.tsx` → MapViewPage
-- [ ] สร้าง `src/routes/vehicles.tsx` → VehicleListPage
-- [ ] สร้าง `src/routes/tasks.tsx` → TaskTrackerPage
-- [ ] รัน dev server ตรวจสอบ `routeTree.gen.ts` ถูก generate
+- [x] สร้าง `src/routes/__root.tsx` — root layout + `<Outlet />`
+- [x] สร้าง `src/routes/index.tsx` → DashboardPage
+- [x] สร้าง `src/routes/map.tsx` → MapViewPage
+- [x] สร้าง `src/routes/vehicles.tsx` → VehicleListPage
+- [x] สร้าง `src/routes/tasks.tsx` → TaskTrackerPage
+- [x] รัน dev server ตรวจสอบ `routeTree.gen.ts` ถูก generate
 
 ### 2.7 Setup entry point
 
-- [ ] แก้ `src/main.tsx`:
+- [x] แก้ `src/main.tsx`:
 
 ```tsx
 import { StrictMode } from "react";
@@ -348,7 +348,7 @@ createRoot(document.getElementById("root")!).render(
 );
 ```
 
-- [ ] `git commit -m "feat: fsd folder structure + shared layer"`
+- [x] `git commit -m "feat: fsd folder structure + shared layer"`
 
 ---
 
