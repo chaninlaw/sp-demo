@@ -9,7 +9,6 @@ dist/
 
 # Logs
 *.log
-bun.lock
 
 # Editor
 .vscode/
@@ -20,6 +19,3 @@ bun.lock
 # OS
 .DS_Store
 Thumbs.db
-
-# TanStack Router generated
-src/routeTree.gen.ts
