@@ -10,6 +10,7 @@
 
 import { readFileSync } from "fs";
 import { resolve } from "path";
+import sharp from "sharp";
 
 const TOKEN = process.env.VITE_LINE_CHANNEL_ACCESS_TOKEN;
 const LIFF_ID = process.env.VITE_LIFF_ID;
@@ -54,30 +55,56 @@ async function createRichMenu(): Promise<string> {
   return richMenuId;
 }
 
-async function uploadImage(richMenuId: string): Promise<void> {
+async function prepareImage(): Promise<{ data: Buffer; contentType: string }> {
   const imagePath = resolve(import.meta.dir, "background.png");
-  let imageData: Buffer;
+  let raw: Buffer;
   try {
-    imageData = readFileSync(imagePath);
+    raw = readFileSync(imagePath);
   } catch {
-    console.warn("⚠️   background.png not found — skipping image upload");
-    console.warn("    Open rich-menu/template.html in browser, screenshot it,");
-    console.warn(
-      "    save as rich-menu/background.png, then re-run this script.",
+    throw new Error(
+      "background.png not found.\n" +
+        "    Open rich-menu/template.html in browser, screenshot it,\n" +
+        "    save as rich-menu/background.png (2500×1686px), then re-run.",
     );
-    return;
   }
 
-  console.log("🖼️   Uploading background image...");
+  const sizeMB = raw.length / 1_048_576;
+  if (sizeMB <= 1) {
+    console.log(`🖼️   Image ready (${sizeMB.toFixed(2)} MB)`);
+    return { data: raw, contentType: "image/png" };
+  }
+
+  // Over 1 MB — compress to JPEG at decreasing quality until under limit
+  console.log(`🗜️   Image is ${sizeMB.toFixed(2)} MB — compressing to JPEG...`);
+  for (const quality of [85, 75, 65, 50]) {
+    const compressed = await sharp(raw)
+      .resize(2500, 1686, { fit: "fill" })
+      .jpeg({ quality })
+      .toBuffer();
+    const compressedMB = compressed.length / 1_048_576;
+    if (compressedMB <= 1) {
+      console.log(
+        `✅  Compressed to ${compressedMB.toFixed(2)} MB (JPEG q${quality})`,
+      );
+      return { data: compressed, contentType: "image/jpeg" };
+    }
+  }
+  throw new Error("Could not compress image below 1 MB — try a simpler design");
+}
+
+async function uploadImage(richMenuId: string): Promise<void> {
+  const { data, contentType } = await prepareImage();
+
+  console.log("📤  Uploading background image...");
   const res = await fetch(
     `${DATA_BASE}/v2/bot/richmenu/${richMenuId}/content`,
     {
       method: "POST",
       headers: {
         Authorization: `Bearer ${TOKEN}`,
-        "Content-Type": "image/png",
+        "Content-Type": contentType,
       },
-      body: imageData,
+      body: data,
     },
   );
   if (!res.ok) {
