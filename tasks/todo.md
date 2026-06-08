@@ -22,7 +22,7 @@
 | Phase 5  | Pages — Map View                    | ✅ done |
 | Phase 6  | Pages — Vehicle List                | ✅ done |
 | Phase 7  | Pages — Task Tracker                | ✅ done |
-| Phase 8  | LIFF Integration                    | ⬜ todo |
+| Phase 8  | Widgets (App Shell)                 | ✅ done |
 | Phase 9  | LINE Rich Menu Setup                | ⬜ todo |
 | Phase 10 | Flex Message Template               | ⬜ todo |
 | Phase 11 | Deploy to Vercel                    | ⬜ todo |
@@ -547,20 +547,20 @@ export const vehicleQueryOptions = queryOptions({
 
 ### 8.1 สร้าง AppHeader
 
-- [ ] สร้าง `src/widgets/app-header/ui/AppHeader.tsx`:
+- [x] สร้าง `src/widgets/app-header/ui/AppHeader.tsx`:
   - Logo / ชื่อโปรเจ็ค "SP ConsTrack"
   - LINE user profile picture (จาก LIFF `liff.getProfile()`)
 
 ### 8.2 สร้าง BottomNav
 
-- [ ] สร้าง `src/widgets/bottom-nav/ui/BottomNav.tsx`:
+- [x] สร้าง `src/widgets/bottom-nav/ui/BottomNav.tsx`:
   - 4 tabs: Dashboard, แผนที่, รายการรถ, งาน
   - `useRouterState` highlight active tab
   - navigate ด้วย `useNavigate` จาก TanStack Router
 
 ### 8.3 Wire เข้า root layout
 
-- [ ] แก้ `src/routes/__root.tsx`:
+- [x] แก้ `src/routes/__root.tsx`:
 
 ```tsx
 export const Route = createRootRoute({
@@ -576,7 +576,7 @@ export const Route = createRootRoute({
 });
 ```
 
-- [ ] `git commit -m "feat: app shell — header + bottom nav"`
+- [x] `git commit -m "feat: app shell — header + bottom nav"`
 
 ---
 
