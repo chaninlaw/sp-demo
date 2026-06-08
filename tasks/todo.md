@@ -20,7 +20,7 @@
 | Phase 3  | Entities & Data Layer (Sheets API)  | ✅ done |
 | Phase 4  | Pages — Dashboard                   | ✅ done |
 | Phase 5  | Pages — Map View                    | ✅ done |
-| Phase 6  | Pages — Vehicle List                | ⬜ todo |
+| Phase 6  | Pages — Vehicle List                | ✅ done |
 | Phase 7  | Pages — Task Tracker                | ⬜ todo |
 | Phase 8  | LIFF Integration                    | ⬜ todo |
 | Phase 9  | LINE Rich Menu Setup                | ⬜ todo |
@@ -504,22 +504,22 @@ export const vehicleQueryOptions = queryOptions({
 
 ### 6.1 สร้าง VehicleListPage
 
-- [ ] สร้าง `src/pages/vehicle-list/ui/VehicleListPage.tsx`
+- [x] สร้าง `src/pages/vehicle-list/ui/VehicleListPage.tsx`
 
 ### 6.2 สร้าง VehicleTable
 
-- [ ] สร้าง `src/pages/vehicle-list/ui/VehicleTable.tsx`:
+- [x] สร้าง `src/pages/vehicle-list/ui/VehicleTable.tsx`:
   - shadcn `Table`
   - columns: รหัส, ชื่อ, ทะเบียน, ประเภท, สถานะ, ไซต์งาน, อัพเดตล่าสุด
   - StatusBadge ใน column สถานะ
 
 ### 6.3 สร้าง VehicleTypeFilter
 
-- [ ] สร้าง `src/pages/vehicle-list/ui/VehicleTypeFilter.tsx`:
-  - shadcn `Tabs` หรือ chip filter
-  - filter ตาม VehicleType
+- [x] สร้าง `src/pages/vehicle-list/ui/VehicleTypeFilter.tsx`:
+  - chip filter (rounded Button variant)
+  - filter ตาม VehicleType ทั้ง 6 ประเภท + "ทั้งหมด"
 
-- [ ] `git commit -m "feat: vehicle list page"`
+- [x] `git commit -m "feat: vehicle list page"`
 
 ---
 
