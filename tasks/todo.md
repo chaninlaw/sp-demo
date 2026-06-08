@@ -17,8 +17,8 @@
 | -------- | ----------------------------------- | ------- |
 | Phase 1  | Project Bootstrap & Tooling         | ✅ done |
 | Phase 2  | FSD Folder Structure + Shared Layer | ✅ done |
-| Phase 3  | Entities & Data Layer (Sheets API)  | ⬜ todo |
-| Phase 4  | Pages — Dashboard                   | ⬜ todo |
+| Phase 3  | Entities & Data Layer (Sheets API)  | ✅ done |
+| Phase 4  | Pages — Dashboard                   | ✅ done |
 | Phase 5  | Pages — Map View                    | ⬜ todo |
 | Phase 6  | Pages — Vehicle List                | ⬜ todo |
 | Phase 7  | Pages — Task Tracker                | ⬜ todo |
@@ -356,7 +356,7 @@ createRoot(document.getElementById("root")!).render(
 
 ### 3.1 สร้าง vehicle entity types
 
-- [ ] สร้าง `src/entities/vehicle/model/vehicle.ts`:
+- [x] สร้าง `src/entities/vehicle/model/vehicle.ts`:
 
 ```ts
 export type VehicleType =
@@ -384,13 +384,13 @@ export interface Vehicle {
 }
 ```
 
-- [ ] สร้าง `src/entities/vehicle/ui/StatusBadge.tsx` — shadcn Badge + color ตาม status
-- [ ] สร้าง `src/entities/vehicle/ui/VehiclePin.tsx` — SVG pin icon ตาม vehicleType
-- [ ] สร้าง `src/entities/vehicle/index.ts` (public API)
+- [x] สร้าง `src/entities/vehicle/ui/StatusBadge.tsx` — shadcn Badge + color ตาม status
+- [x] สร้าง `src/entities/vehicle/ui/VehiclePin.tsx` — SVG pin icon ตาม vehicleType
+- [x] สร้าง `src/entities/vehicle/index.ts` (public API)
 
 ### 3.2 สร้าง Google Sheets API client
 
-- [ ] สร้าง `src/shared/api/sheets.ts`:
+- [x] สร้าง `src/shared/api/sheets.ts`:
 
 ```ts
 // Sheets API v4 — public read (API key only, no OAuth)
@@ -415,11 +415,11 @@ function parseSheetRows(rows: string[][]): Vehicle[] {
 }
 ```
 
-- [ ] สร้าง `src/shared/api/index.ts` (re-export)
+- [x] สร้าง `src/shared/api/index.ts` (re-export)
 
 ### 3.3 สร้าง TanStack Query hook
 
-- [ ] สร้าง `src/shared/lib/polling.ts` — query options factory:
+- [x] สร้าง `src/shared/lib/polling.ts` — query options factory:
 
 ```ts
 export const vehicleQueryOptions = queryOptions({
@@ -438,7 +438,7 @@ export const vehicleQueryOptions = queryOptions({
 - [ ] Share sheet เป็น "Anyone with link can view"
 - [ ] บันทึก Sheet ID ลง `.env.local`
 
-- [ ] `git commit -m "feat: vehicle entity + sheets api client"`
+- [x] `git commit -m "feat: vehicle entity + sheets api client"`
 
 ---
 
@@ -446,29 +446,29 @@ export const vehicleQueryOptions = queryOptions({
 
 ### 4.1 สร้าง DashboardPage
 
-- [ ] สร้าง `src/pages/dashboard/ui/DashboardPage.tsx`:
+- [x] สร้าง `src/pages/dashboard/ui/DashboardPage.tsx`:
   - ใช้ `vehicleQueryOptions` ดึงข้อมูล
   - แสดง loading skeleton ระหว่างโหลด
   - แสดง total รถทั้งหมด, แยกตาม status (active/idle/offline)
 
 ### 4.2 สร้าง StatsSummary component
 
-- [ ] สร้าง `src/pages/dashboard/ui/StatsSummary.tsx`:
+- [x] สร้าง `src/pages/dashboard/ui/StatsSummary.tsx`:
   - StatCard 3 ใบ: 🟢 Active | 🟡 Idle | 🔴 Offline
   - ใช้ `shared/ui/stat-card/StatCard.tsx`
 
 ### 4.3 สร้าง VehicleTypeChart
 
-- [ ] สร้าง `src/pages/dashboard/ui/VehicleTypeChart.tsx`:
+- [x] สร้าง `src/pages/dashboard/ui/VehicleTypeChart.tsx`:
   - Recharts `PieChart` แสดงสัดส่วนรถแต่ละประเภท
   - ใช้สีจาก `shared/lib/vehicle-colors.ts`
 
 ### 4.4 สร้าง dashboard model
 
-- [ ] สร้าง `src/pages/dashboard/model/dashboard.ts`:
+- [x] สร้าง `src/pages/dashboard/model/dashboard.ts`:
   - derived stats functions: `groupByStatus`, `groupByType`
 
-- [ ] `git commit -m "feat: dashboard page"`
+- [x] `git commit -m "feat: dashboard page"`
 
 ---
 
