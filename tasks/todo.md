@@ -19,7 +19,7 @@
 | Phase 2  | FSD Folder Structure + Shared Layer | ✅ done |
 | Phase 3  | Entities & Data Layer (Sheets API)  | ✅ done |
 | Phase 4  | Pages — Dashboard                   | ✅ done |
-| Phase 5  | Pages — Map View                    | ⬜ todo |
+| Phase 5  | Pages — Map View                    | ✅ done |
 | Phase 6  | Pages — Vehicle List                | ⬜ todo |
 | Phase 7  | Pages — Task Tracker                | ⬜ todo |
 | Phase 8  | LIFF Integration                    | ⬜ todo |
@@ -476,25 +476,27 @@ export const vehicleQueryOptions = queryOptions({
 
 ### 5.1 Setup MapLibre / mapcn.dev
 
-- [ ] อ่าน docs mapcn.dev เพื่อดู Map component API
-- [ ] สร้าง `src/pages/map-view/ui/MapViewPage.tsx`:
-  - Map component เต็ม viewport
+- [x] สร้าง `src/pages/map-view/ui/MapViewPage.tsx`:
+  - maplibre-gl + CARTO Positron style (no API key required)
   - loop `vehicles` → VehicleMarker ต่อคัน
+  - Suspense skeleton ระหว่างโหลด
+  - fitBounds ไปยังตำแหน่งรถทั้งหมดเมื่อโหลดครั้งแรก
 
 ### 5.2 สร้าง VehicleMarker
 
-- [ ] สร้าง `src/pages/map-view/ui/VehicleMarker.tsx`:
-  - custom marker ใช้ `entities/vehicle/ui/VehiclePin.tsx`
-  - click → popup แสดง: ชื่อรถ, ประเภท, status, ไซต์งาน, driver
+- [x] สร้าง `src/pages/map-view/ui/VehicleMarker.ts`:
+  - `createMarkerElement(vehicle)` — DOM element (pin SVG + emoji icon)
+  - `createPopupHTML(vehicle)` — popup แสดง: ชื่อรถ, ประเภท, status, ไซต์งาน, driver, task
 
 ### 5.3 สร้าง MapFilters
 
-- [ ] สร้าง `src/pages/map-view/ui/MapFilters.tsx`:
+- [x] สร้าง `src/pages/map-view/ui/MapFilters.tsx`:
   - filter chip แยกตาม VehicleType
-  - "All" + แต่ละประเภท
+  - "ทั้งหมด" + แต่ละประเภท (7 chips)
   - state อยู่ใน `pages/map-view/model/map-filters.ts`
+  - overlaid บน map ด้านบน (absolute positioning)
 
-- [ ] `git commit -m "feat: map view page"`
+- [x] `git commit -m "feat: map view page"`
 
 ---
 
