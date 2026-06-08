@@ -21,7 +21,7 @@
 | Phase 4  | Pages — Dashboard                   | ✅ done |
 | Phase 5  | Pages — Map View                    | ✅ done |
 | Phase 6  | Pages — Vehicle List                | ✅ done |
-| Phase 7  | Pages — Task Tracker                | ⬜ todo |
+| Phase 7  | Pages — Task Tracker                | ✅ done |
 | Phase 8  | LIFF Integration                    | ⬜ todo |
 | Phase 9  | LINE Rich Menu Setup                | ⬜ todo |
 | Phase 10 | Flex Message Template               | ⬜ todo |
@@ -527,19 +527,19 @@ export const vehicleQueryOptions = queryOptions({
 
 ### 7.1 สร้าง TaskTrackerPage
 
-- [ ] สร้าง `src/pages/task-tracker/ui/TaskTrackerPage.tsx`
+- [x] สร้าง `src/pages/task-tracker/ui/TaskTrackerPage.tsx`
 
 ### 7.2 สร้าง TaskCard
 
-- [ ] สร้าง `src/pages/task-tracker/ui/TaskCard.tsx`:
+- [x] สร้าง `src/pages/task-tracker/ui/TaskCard.tsx`:
   - แสดง: ชื่อรถ, ประเภท, taskDescription, ไซต์งาน, status badge
 
 ### 7.3 สร้าง TaskTimeline (optional สำหรับ demo)
 
-- [ ] สร้าง `src/pages/task-tracker/ui/TaskTimeline.tsx`:
+- [x] สร้าง `src/pages/task-tracker/ui/TaskTimeline.tsx`:
   - list รายการรถที่ active เรียงตาม lastUpdated
 
-- [ ] `git commit -m "feat: task tracker page"`
+- [x] `git commit -m "feat: task tracker page"`
 
 ---
 
