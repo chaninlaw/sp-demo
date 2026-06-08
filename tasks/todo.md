@@ -24,8 +24,8 @@
 | Phase 7  | Pages — Task Tracker                | ✅ done        |
 | Phase 8  | Widgets (App Shell)                 | ✅ done        |
 | Phase 9  | LIFF Integration                    | ✅ done        |
-| Phase 10 | LINE Rich Menu Setup                | 🔄 in progress |
-| Phase 11 | Deploy to Vercel                    | ⬜ todo        |
+| Phase 10 | LINE Rich Menu Setup                | ✅ done        |
+| Phase 11 | Deploy to Vercel                    | 🔄 in progress |
 
 ---
 
@@ -644,22 +644,26 @@ export const Route = createRootRoute({
 
 ---
 
-## Phase 12 — Deploy to Vercel
+## Phase 11 — Deploy to Vercel
 
-### 12.1 สร้าง Vercel project
+### 11.1 สร้าง Vercel project
 
+- [x] แก้ `tsconfig.node.json` — ตัด `rich-menu/*` ออกจาก include (Bun script ไม่ใช่ส่วนหนึ่งของ app build)
+- [x] สร้าง `vercel.json` — SPA rewrite + build config
+- [x] ตรวจสอบ `bun run build` ผ่าน (1121 modules, dist พร้อม)
 - [ ] Push code ขึ้น GitHub repo ใหม่ `sp-constrack`
 - [ ] เปิด [vercel.com](https://vercel.com) → Import Project
 - [ ] ตั้งค่า Environment Variables ทั้งหมดจาก `.env.example`
 
-### 12.2 ตั้งค่า build
+### 11.2 ตั้งค่า build
 
-- [ ] ตรวจสอบ `vercel.json` หรือ build settings:
+- [x] สร้าง `vercel.json`:
   - Framework: Vite
   - Build Command: `bun run build`
   - Output Directory: `dist`
+  - SPA rewrite: `/(.*) → /index.html`
 
-### 12.3 อัพเดต LIFF Endpoint URL
+### 11.3 อัพเดต LIFF Endpoint URL
 
 - [ ] นำ Vercel URL → อัพเดตใน LINE Developers Console
 - [ ] อัพเดต Rich Menu URLs ให้ตรงกับ LIFF ID จริง
