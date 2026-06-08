@@ -13,19 +13,19 @@
 
 ## สถานะรวม
 
-| Phase    | ชื่อ                                | สถานะ   |
-| -------- | ----------------------------------- | ------- |
-| Phase 1  | Project Bootstrap & Tooling         | ✅ done |
-| Phase 2  | FSD Folder Structure + Shared Layer | ✅ done |
-| Phase 3  | Entities & Data Layer (Sheets API)  | ✅ done |
-| Phase 4  | Pages — Dashboard                   | ✅ done |
-| Phase 5  | Pages — Map View                    | ✅ done |
-| Phase 6  | Pages — Vehicle List                | ✅ done |
-| Phase 7  | Pages — Task Tracker                | ✅ done |
-| Phase 8  | Widgets (App Shell)                 | ✅ done |
-| Phase 9  | LINE Rich Menu Setup                | ⬜ todo |
-| Phase 10 | Flex Message Template               | ⬜ todo |
-| Phase 11 | Deploy to Vercel                    | ⬜ todo |
+| Phase    | ชื่อ                                | สถานะ          |
+| -------- | ----------------------------------- | -------------- |
+| Phase 1  | Project Bootstrap & Tooling         | ✅ done        |
+| Phase 2  | FSD Folder Structure + Shared Layer | ✅ done        |
+| Phase 3  | Entities & Data Layer (Sheets API)  | ✅ done        |
+| Phase 4  | Pages — Dashboard                   | ✅ done        |
+| Phase 5  | Pages — Map View                    | ✅ done        |
+| Phase 6  | Pages — Vehicle List                | ✅ done        |
+| Phase 7  | Pages — Task Tracker                | ✅ done        |
+| Phase 8  | Widgets (App Shell)                 | ✅ done        |
+| Phase 9  | LIFF Integration                    | 🔄 in progress |
+| Phase 10 | Flex Message Template               | ⬜ todo        |
+| Phase 11 | Deploy to Vercel                    | ⬜ todo        |
 
 ---
 
@@ -584,13 +584,10 @@ export const Route = createRootRoute({
 
 ### 9.1 สร้าง LIFF Provider
 
-- [ ] แก้ `src/app/providers/liff-provider.tsx`:
-
-```tsx
-// init liff on mount
-// gate children render จนกว่า liff.ready
-// expose context: isLoggedIn, profile, lineId
-```
+- [x] แก้ `src/app/providers/liff-provider.tsx`:
+  - init liff on mount ✅
+  - gate children render จนกว่า liff.ready ✅
+  - expose context: isLoggedIn, profile, lineId ✅
 
 ### 9.2 สร้าง LIFF App ใน LINE Developers Console
 

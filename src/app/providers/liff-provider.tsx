@@ -18,12 +18,14 @@ interface LiffContextValue {
   isReady: boolean;
   isLoggedIn: boolean;
   profile: LiffProfile | null;
+  lineId: string | null;
 }
 
 const LiffContext = createContext<LiffContextValue>({
   isReady: false,
   isLoggedIn: false,
   profile: null,
+  lineId: null,
 });
 
 export function useLiff() {
@@ -34,6 +36,7 @@ export function LiffProvider({ children }: { children: ReactNode }) {
   const [isReady, setIsReady] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profile, setProfile] = useState<LiffProfile | null>(null);
+  const [lineId, setLineId] = useState<string | null>(null);
 
   useEffect(() => {
     const init = async () => {
@@ -44,6 +47,7 @@ export function LiffProvider({ children }: { children: ReactNode }) {
 
         if (loggedIn) {
           const p = await liff.getProfile();
+          setLineId(p.userId);
           setProfile({
             userId: p.userId,
             displayName: p.displayName,
@@ -69,7 +73,7 @@ export function LiffProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <LiffContext.Provider value={{ isReady, isLoggedIn, profile }}>
+    <LiffContext.Provider value={{ isReady, isLoggedIn, profile, lineId }}>
       {children}
     </LiffContext.Provider>
   );
