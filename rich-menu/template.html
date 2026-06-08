@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SP ConsTrack Rich Menu</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: "Noto Sans Thai", "Segoe UI", sans-serif;
+      }
+      .menu {
+        width: 2500px;
+        height: 1686px;
+        background: #1a1a2e;
+        display: grid;
+        grid-template-columns: 833px 834px 833px;
+        grid-template-rows: 843px 843px;
+        transform-origin: top left;
+        transform: scale(0.4);
+      }
+      .cell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+        transition: background 0.15s;
+        position: relative;
+      }
+      .cell:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .cell .icon {
+        font-size: 120px;
+        line-height: 1;
+      }
+      .cell .label {
+        font-size: 72px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 2px;
+      }
+      .cell .sublabel {
+        font-size: 48px;
+        color: rgba(255, 255, 255, 0.5);
+        letter-spacing: 1px;
+      }
+
+      /* accent colours per cell */
+      .cell-map {
+        background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+      }
+      .cell-dashboard {
+        background: linear-gradient(135deg, #1a472a 0%, #16213e 100%);
+      }
+      .cell-vehicles {
+        background: linear-gradient(135deg, #4a1942 0%, #16213e 100%);
+      }
+      .cell-tasks {
+        background: linear-gradient(135deg, #7a3b00 0%, #16213e 100%);
+      }
+      .cell-notify {
+        background: linear-gradient(135deg, #1a3a4a 0%, #16213e 100%);
+      }
+      .cell-help {
+        background: linear-gradient(135deg, #2d2d2d 0%, #16213e 100%);
+      }
+
+      /* divider line between rows */
+      .cell:nth-child(4),
+      .cell:nth-child(5),
+      .cell:nth-child(6) {
+        border-top: 3px solid rgba(255, 255, 255, 0.15);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">
+      <div class="cell cell-map">
+        <span class="icon">🗺️</span>
+        <span class="label">แผนที่</span>
+        <span class="sublabel">Map View</span>
+      </div>
+      <div class="cell cell-dashboard">
+        <span class="icon">📊</span>
+        <span class="label">Dashboard</span>
+        <span class="sublabel">ภาพรวม</span>
+      </div>
+      <div class="cell cell-vehicles">
+        <span class="icon">🚛</span>
+        <span class="label">รายการรถ</span>
+        <span class="sublabel">Vehicles</span>
+      </div>
+      <div class="cell cell-tasks">
+        <span class="icon">📋</span>
+        <span class="label">งาน</span>
+        <span class="sublabel">Tasks</span>
+      </div>
+      <div class="cell cell-notify">
+        <span class="icon">🔔</span>
+        <span class="label">แจ้งเตือน</span>
+        <span class="sublabel">Notifications</span>
+      </div>
+      <div class="cell cell-help">
+        <span class="icon">ℹ️</span>
+        <span class="label">วิธีใช้</span>
+        <span class="sublabel">Help</span>
+      </div>
+    </div>
+
+    <script>
+      // Auto-scale to fit viewport for preview
+      const menu = document.querySelector(".menu");
+      const scale =
+        Math.min(window.innerWidth / 2500, window.innerHeight / 1686) * 0.95;
+      menu.style.transform = `scale(${scale})`;
+      menu.style.marginBottom = `-${1686 * (1 - scale)}px`;
+      menu.style.marginRight = `-${2500 * (1 - scale)}px`;
+    </script>
+  </body>
+</html>

@@ -23,8 +23,8 @@
 | Phase 6  | Pages — Vehicle List                | ✅ done        |
 | Phase 7  | Pages — Task Tracker                | ✅ done        |
 | Phase 8  | Widgets (App Shell)                 | ✅ done        |
-| Phase 9  | LIFF Integration                    | 🔄 in progress |
-| Phase 10 | Flex Message Template               | ⬜ todo        |
+| Phase 9  | LIFF Integration                    | ✅ done        |
+| Phase 10 | LINE Rich Menu Setup                | 🔄 in progress |
 | Phase 11 | Deploy to Vercel                    | ⬜ todo        |
 
 ---
@@ -615,63 +615,20 @@ export const Route = createRootRoute({
 
 ### 10.1 ออกแบบ Rich Menu image
 
-- [ ] ขนาด: 2500 × 1686px (2 rows × 3 cols)
-- [ ] Layout (6 ปุ่ม):
-  ```
-  [🗺️ แผนที่]  [📊 Dashboard]  [🚛 รายการรถ]
-  [📋 งาน]    [🔔 แจ้งเตือน]  [ℹ️ วิธีใช้]
-  ```
-- [ ] บันทึกเป็น `rich-menu/background.png`
+- [ ] เปิด `rich-menu/template.html` ใน browser แล้ว screenshot
+- [ ] บันทึกเป็น `rich-menu/background.png` (2500 × 1686px)
 
 ### 10.2 สร้าง Rich Menu layout config
 
-- [ ] สร้าง `rich-menu/layout.json`:
-
-```json
-{
-  "size": { "width": 2500, "height": 1686 },
-  "selected": true,
-  "name": "SP ConsTrack Menu",
-  "chatBarText": "เมนู",
-  "areas": [
-    {
-      "bounds": { "x": 0, "y": 0, "width": 833, "height": 843 },
-      "action": { "type": "uri", "uri": "https://liff.line.me/{LIFF_ID}/map" }
-    },
-    {
-      "bounds": { "x": 833, "y": 0, "width": 834, "height": 843 },
-      "action": { "type": "uri", "uri": "https://liff.line.me/{LIFF_ID}/" }
-    },
-    {
-      "bounds": { "x": 1667, "y": 0, "width": 833, "height": 843 },
-      "action": {
-        "type": "uri",
-        "uri": "https://liff.line.me/{LIFF_ID}/vehicles"
-      }
-    },
-    {
-      "bounds": { "x": 0, "y": 843, "width": 833, "height": 843 },
-      "action": { "type": "uri", "uri": "https://liff.line.me/{LIFF_ID}/tasks" }
-    },
-    {
-      "bounds": { "x": 833, "y": 843, "width": 834, "height": 843 },
-      "action": { "type": "message", "text": "แจ้งเตือน" }
-    },
-    {
-      "bounds": { "x": 1667, "y": 843, "width": 833, "height": 843 },
-      "action": { "type": "message", "text": "วิธีใช้" }
-    }
-  ]
-}
-```
+- [x] สร้าง `rich-menu/layout.json` ✅
 
 ### 10.3 สร้าง setup script
 
-- [ ] สร้าง `rich-menu/setup.ts`:
+- [x] สร้าง `rich-menu/setup.ts` ✅
   - สร้าง Rich Menu ผ่าน LINE Messaging API
   - upload background image
   - set เป็น default Rich Menu
-  - รันด้วย `bun run rich-menu/setup.ts`
+- [ ] เตรียม `background.png` แล้วรัน: `bun run rich-menu/setup.ts`
 
 - [ ] `git commit -m "feat: rich menu setup"`
 
