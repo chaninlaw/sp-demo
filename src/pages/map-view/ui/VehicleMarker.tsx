@@ -31,10 +31,7 @@ export function VehicleMarkerIcon({ vehicle }: { vehicle: Vehicle }) {
 
 export function VehiclePopupContent({ vehicle }: { vehicle: Vehicle }) {
   return (
-    <div
-      className="min-w-[200px] bg-card border border-border rounded-lg p-3 shadow-xl"
-      style={{ fontFamily: "var(--font-sans)" }}
-    >
+    <div className="min-w-[200px]" style={{ fontFamily: "var(--font-sans)" }}>
       <div className="flex items-start justify-between gap-2 mb-2">
         <div>
           <p

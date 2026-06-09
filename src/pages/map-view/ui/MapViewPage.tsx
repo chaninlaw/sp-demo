@@ -48,7 +48,12 @@ function MapContent() {
 
   return (
     <div className="relative h-[calc(100dvh-var(--header-height)-var(--bottom-nav-height))]">
-      <Map className="w-full h-full" center={THAILAND_CENTER} zoom={10}>
+      <Map
+        className="w-full h-full"
+        center={THAILAND_CENTER}
+        zoom={10}
+        maplibreLogo={false}
+      >
         <MapBoundsFitter vehicles={vehicles} />
         <MapControls position="bottom-right" showZoom />
         {filtered.map((vehicle) => (
@@ -61,7 +66,7 @@ function MapContent() {
             <MarkerContent>
               <VehicleMarkerIcon vehicle={vehicle} />
             </MarkerContent>
-            <MarkerPopup closeButton>
+            <MarkerPopup closeButton className="p-4">
               <VehiclePopupContent vehicle={vehicle} />
             </MarkerPopup>
           </MapMarker>
@@ -95,7 +100,7 @@ function MapSkeleton() {
       <Skeleton className="w-full h-full rounded-none" />
       <div className="absolute top-3 left-0 right-0 px-3 flex gap-1.5">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Skeleton key={i} className="h-8 w-20 rounded-full flex-shrink-0" />
+          <Skeleton key={i} className="h-8 w-20 rounded-full shrink-0" />
         ))}
       </div>
     </div>

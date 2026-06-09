@@ -19,13 +19,13 @@ export function AppHeader() {
           </div>
           <div className="flex items-baseline gap-1.5">
             <span
-              className="text-primary leading-none tracking-widest text-xs font-semibold"
+              className="text-primary leading-none tracking-widest text-sm font-semibold"
               style={{ fontFamily: "var(--font-display)" }}
             >
               SP
             </span>
             <span
-              className="text-foreground leading-none tracking-[0.2em] text-sm font-bold uppercase"
+              className="text-foreground leading-none tracking-[0.2em] text-sm font-bold"
               style={{ fontFamily: "var(--font-display)" }}
             >
               ConsTrack

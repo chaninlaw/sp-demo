@@ -40,15 +40,6 @@ function DashboardContent() {
             Auto-refresh · 30s
           </p>
         </div>
-        <div className="flex items-center gap-1.5 mt-1">
-          <span
-            className="w-2 h-2 rounded-full bg-emerald-400"
-            style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
-          />
-          <span className="text-[10px] text-emerald-400 font-mono tracking-widest">
-            LIVE
-          </span>
-        </div>
       </div>
 
       <div>
