@@ -222,6 +222,8 @@
   body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
+    position: relative;
+    z-index: 1;
   }
 
   /* dot-grid texture on background */
@@ -236,7 +238,7 @@
     );
     background-size: 24px 24px;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
   }
 
   .dark body::before {

@@ -5,9 +5,9 @@ import { AppDevtools } from "@/shared/ui/devtools/AppDevtools";
 
 export const Route = createRootRoute({
   component: () => (
-    <div className="flex flex-col h-screen">
+    <div className="h-dvh">
       <AppHeader />
-      <main className="flex-1 overflow-auto `pb-(--bottom-nav-height)">
+      <main className="h-full overflow-auto pt-(--header-height) pb-(--bottom-nav-height)">
         <Outlet />
       </main>
       <BottomNav />

@@ -8,7 +8,7 @@ export function AppHeader() {
   const { theme, toggle } = useTheme();
 
   return (
-    <header className="shrink-0 bg-card border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-card/80 supports-backdrop-filter:bg-card/60 border-b border-border/40">
       <div className="flex items-center justify-between px-4 h-14">
         <div className="flex items-center gap-2.5">
           <div className="flex items-center justify-center w-7 h-7 rounded bg-primary">
