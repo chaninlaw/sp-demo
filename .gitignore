@@ -4,6 +4,7 @@ dist/
 .output/
 
 # Environment files
+.env
 .env.local
 .env.*.local
 
