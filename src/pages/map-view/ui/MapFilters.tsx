@@ -1,27 +1,16 @@
-import { Button } from "@/shared/ui/button";
-import { VEHICLE_ICONS, VEHICLE_LABELS } from "@/shared/lib/vehicle-colors";
+import { ScrollArea, ScrollBar } from "@/shared/ui/scroll-area";
+import { VEHICLE_LABELS } from "@/shared/lib/vehicle-colors";
+import { cn } from "@/shared/lib/cn";
 import type { MapFilter } from "../model/map-filters";
 
-const FILTERS: { value: MapFilter; label: string; icon: string }[] = [
-  { value: "all", label: "ทั้งหมด", icon: "🗺️" },
-  {
-    value: "excavator",
-    label: VEHICLE_LABELS.excavator,
-    icon: VEHICLE_ICONS.excavator,
-  },
-  {
-    value: "dump_truck",
-    label: VEHICLE_LABELS.dump_truck,
-    icon: VEHICLE_ICONS.dump_truck,
-  },
-  {
-    value: "concrete_mixer",
-    label: VEHICLE_LABELS.concrete_mixer,
-    icon: VEHICLE_ICONS.concrete_mixer,
-  },
-  { value: "crane", label: VEHICLE_LABELS.crane, icon: VEHICLE_ICONS.crane },
-  { value: "roller", label: VEHICLE_LABELS.roller, icon: VEHICLE_ICONS.roller },
-  { value: "other", label: VEHICLE_LABELS.other, icon: VEHICLE_ICONS.other },
+const FILTERS: { value: MapFilter; label: string }[] = [
+  { value: "all", label: "ทั้งหมด" },
+  { value: "excavator", label: VEHICLE_LABELS.excavator },
+  { value: "dump_truck", label: VEHICLE_LABELS.dump_truck },
+  { value: "concrete_mixer", label: VEHICLE_LABELS.concrete_mixer },
+  { value: "crane", label: VEHICLE_LABELS.crane },
+  { value: "roller", label: VEHICLE_LABELS.roller },
+  { value: "other", label: VEHICLE_LABELS.other },
 ];
 
 interface MapFiltersProps {
@@ -31,19 +20,25 @@ interface MapFiltersProps {
 
 export function MapFilters({ activeFilter, onChange }: MapFiltersProps) {
   return (
-    <div className="flex gap-2 overflow-x-auto">
-      {FILTERS.map(({ value, label, icon }) => (
-        <Button
-          key={value}
-          variant={activeFilter === value ? "default" : "secondary"}
-          size="sm"
-          className="rounded-full whitespace-nowrap shadow-md gap-1.5 flex-shrink-0"
-          onClick={() => onChange(value)}
-        >
-          <span>{icon}</span>
-          <span>{label}</span>
-        </Button>
-      ))}
-    </div>
+    <ScrollArea className="w-full">
+      <div className="flex gap-1.5 pb-3">
+        {FILTERS.map(({ value, label }) => (
+          <button
+            key={value}
+            type="button"
+            onClick={() => onChange(value)}
+            className={cn(
+              "px-4 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap shrink-0 transition-all border backdrop-blur-md shadow-lg",
+              activeFilter === value
+                ? "bg-primary text-primary-foreground border-primary/80"
+                : "bg-card/80 text-muted-foreground border-border/60 hover:text-foreground hover:bg-card/95",
+            )}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <ScrollBar orientation="horizontal" />
+    </ScrollArea>
   );
 }

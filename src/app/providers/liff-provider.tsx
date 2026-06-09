@@ -41,6 +41,17 @@ export function LiffProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const init = async () => {
       try {
+        if (import.meta.env.VITE_LIFF_MOCK === "true") {
+          setIsLoggedIn(true);
+          setLineId("U_demo_account");
+          setProfile({
+            userId: "U_demo_account",
+            displayName: "Demo",
+            pictureUrl: undefined,
+          });
+          return;
+        }
+
         await liff.init({ liffId: LIFF_CONFIG.liffId });
         const loggedIn = liff.isLoggedIn();
         setIsLoggedIn(loggedIn);

@@ -1,60 +1,29 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import maplibregl from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
 import { vehicleQueryOptions } from "@/shared/lib/polling";
 import { Skeleton } from "@/shared/ui/skeleton";
+import { QueryErrorBoundary } from "@/shared/ui/query-error-boundary";
+import {
+  Map,
+  MapControls,
+  MapMarker,
+  MarkerContent,
+  MarkerPopup,
+  useMap,
+} from "@/shared/ui/map";
 import { useMapFilters } from "../model/map-filters";
-import { createMarkerElement, createPopupHTML } from "./VehicleMarker";
 import { MapFilters } from "./MapFilters";
+import { VehicleMarkerIcon, VehiclePopupContent } from "./VehicleMarker";
+import type { Vehicle } from "@/entities/vehicle";
 
-const MAP_STYLE =
-  "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 const THAILAND_CENTER: [number, number] = [100.5018, 13.7563];
-const MAP_HEIGHT = "calc(100dvh - 64px)";
 
-function MapContent() {
-  const { data: vehicles } = useSuspenseQuery(vehicleQueryOptions);
-  const { activeFilter, setActiveFilter } = useMapFilters();
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<maplibregl.Map | null>(null);
-  const markersRef = useRef<Map<string, maplibregl.Marker>>(new Map());
-  const [isMapLoaded, setIsMapLoaded] = useState(false);
+function MapBoundsFitter({ vehicles }: { vehicles: Vehicle[] }) {
+  const { map, isLoaded } = useMap();
 
-  // Init map once
   useEffect(() => {
-    if (!mapContainerRef.current) return;
-
-    const map = new maplibregl.Map({
-      container: mapContainerRef.current,
-      style: MAP_STYLE,
-      center: THAILAND_CENTER,
-      zoom: 10,
-      attributionControl: false,
-    });
-
-    map.addControl(
-      new maplibregl.AttributionControl({ compact: true }),
-      "bottom-left",
-    );
-    map.addControl(new maplibregl.NavigationControl(), "bottom-right");
-    map.once("load", () => setIsMapLoaded(true));
-    mapRef.current = map;
-
-    return () => {
-      markersRef.current.forEach((m) => m.remove());
-      markersRef.current.clear();
-      map.remove();
-      mapRef.current = null;
-      setIsMapLoaded(false);
-    };
-  }, []);
-
-  // Fit bounds to all vehicles once map loads
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map || !isMapLoaded || vehicles.length === 0) return;
-
+    if (!map || !isLoaded || vehicles.length === 0) return;
     const lngs = vehicles.map((v) => v.lng);
     const lats = vehicles.map((v) => v.lat);
     const bounds = new maplibregl.LngLatBounds(
@@ -62,43 +31,59 @@ function MapContent() {
       [Math.max(...lngs), Math.max(...lats)],
     );
     map.fitBounds(bounds, { padding: 80, maxZoom: 14, duration: 600 });
-  }, [isMapLoaded]); // intentionally runs only when map loads
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded]);
 
-  // Sync markers when vehicles or filter changes
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map || !isMapLoaded) return;
+  return null;
+}
 
-    markersRef.current.forEach((m) => m.remove());
-    markersRef.current.clear();
+function MapContent() {
+  const { data: vehicles } = useSuspenseQuery(vehicleQueryOptions);
+  const { activeFilter, setActiveFilter } = useMapFilters();
 
-    const filtered =
-      activeFilter === "all"
-        ? vehicles
-        : vehicles.filter((v) => v.type === activeFilter);
-
-    filtered.forEach((vehicle) => {
-      const el = createMarkerElement(vehicle);
-      const popup = new maplibregl.Popup({
-        offset: [0, -40],
-        closeButton: true,
-        maxWidth: "260px",
-      }).setHTML(createPopupHTML(vehicle));
-
-      const marker = new maplibregl.Marker({ element: el, anchor: "bottom" })
-        .setLngLat([vehicle.lng, vehicle.lat])
-        .setPopup(popup)
-        .addTo(map);
-
-      markersRef.current.set(vehicle.id, marker);
-    });
-  }, [vehicles, activeFilter, isMapLoaded]);
+  const filtered =
+    activeFilter === "all"
+      ? vehicles
+      : vehicles.filter((v) => v.type === activeFilter);
 
   return (
-    <div className="relative" style={{ height: MAP_HEIGHT }}>
-      <div ref={mapContainerRef} className="w-full h-full" />
+    <div className="relative h-[calc(100dvh-var(--header-height)-var(--bottom-nav-height))]">
+      <Map className="w-full h-full" center={THAILAND_CENTER} zoom={10}>
+        <MapBoundsFitter vehicles={vehicles} />
+        <MapControls position="bottom-right" showZoom />
+        {filtered.map((vehicle) => (
+          <MapMarker
+            key={vehicle.id}
+            longitude={vehicle.lng}
+            latitude={vehicle.lat}
+            anchor="bottom"
+          >
+            <MarkerContent>
+              <VehicleMarkerIcon vehicle={vehicle} />
+            </MarkerContent>
+            <MarkerPopup closeButton>
+              <VehiclePopupContent vehicle={vehicle} />
+            </MarkerPopup>
+          </MapMarker>
+        ))}
+      </Map>
+
+      {/* Filter bar */}
       <div className="absolute top-3 left-0 right-0 z-10 px-3">
         <MapFilters activeFilter={activeFilter} onChange={setActiveFilter} />
+      </div>
+
+      {/* Vehicle count pill */}
+      <div className="absolute bottom-4 left-3 z-10">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-card/85 backdrop-blur-md border border-border rounded-full shadow-lg">
+          <span
+            className="w-1.5 h-1.5 rounded-full bg-emerald-400"
+            style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
+          />
+          <span className="text-[11px] font-mono text-foreground tracking-widest">
+            {filtered.length} คัน
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -106,9 +91,9 @@ function MapContent() {
 
 function MapSkeleton() {
   return (
-    <div className="relative bg-muted" style={{ height: MAP_HEIGHT }}>
+    <div className="relative bg-muted h-[calc(100dvh-var(--header-height)-var(--bottom-nav-height))]">
       <Skeleton className="w-full h-full rounded-none" />
-      <div className="absolute top-3 left-0 right-0 px-3 flex gap-2">
+      <div className="absolute top-3 left-0 right-0 px-3 flex gap-1.5">
         {Array.from({ length: 5 }).map((_, i) => (
           <Skeleton key={i} className="h-8 w-20 rounded-full flex-shrink-0" />
         ))}
@@ -119,8 +104,10 @@ function MapSkeleton() {
 
 export function MapViewPage() {
   return (
-    <Suspense fallback={<MapSkeleton />}>
-      <MapContent />
-    </Suspense>
+    <QueryErrorBoundary>
+      <Suspense fallback={<MapSkeleton />}>
+        <MapContent />
+      </Suspense>
+    </QueryErrorBoundary>
   );
 }

@@ -14,20 +14,20 @@ export function StatsSummary({
   total,
 }: StatsSummaryProps) {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-2.5">
       <StatCard
-        title="ทั้งหมด"
+        title="ยานพาหนะทั้งหมด"
         value={total}
-        icon="🚛"
+        accent="amber"
         className="col-span-2"
         description="รถทุกคันในระบบ"
       />
-      <StatCard title="ใช้งานอยู่" value={active} icon="🟢" />
-      <StatCard title="รอการใช้งาน" value={idle} icon="🟡" />
+      <StatCard title="ใช้งานอยู่" value={active} accent="emerald" />
+      <StatCard title="รอการใช้งาน" value={idle} accent="amber" />
       <StatCard
         title="ออฟไลน์"
         value={offline}
-        icon="🔴"
+        accent="slate"
         className="col-span-2"
       />
     </div>

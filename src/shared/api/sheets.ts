@@ -1,19 +1,57 @@
+import axios, { AxiosError } from "axios";
 import { env } from "@/shared/config/env";
 import type { Vehicle, VehicleStatus, VehicleType } from "@/entities/vehicle";
+import { SHEETS_BASE_URL, SHEETS_DATA_RANGE } from "../config/sheets";
 
-const BASE_URL = "https://sheets.googleapis.com/v4/spreadsheets";
+const sheetsClient = axios.create({ baseURL: SHEETS_BASE_URL });
 
 // columns: id | name | licensePlate | type | status | lat | lng | location | lastUpdated | driverName | taskDescription
 export async function fetchVehiclesFromSheet(): Promise<Vehicle[]> {
   const { sheetsId, googleApiKey } = env;
-  const range = "Sheet1!A2:K";
-  const url = `${BASE_URL}/${sheetsId}/values/${range}?key=${googleApiKey}`;
 
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Sheets API error: ${res.status}`);
+  try {
+    const { data } = await sheetsClient.get<{ values?: string[][] }>(
+      `/${sheetsId}/values/${SHEETS_DATA_RANGE}`,
+      { params: { key: googleApiKey } },
+    );
+    return parseSheetRows(data.values ?? []);
+  } catch (err) {
+    if (err instanceof AxiosError && err.response) {
+      const status = err.response.status;
+      const message =
+        (err.response.data as { error?: { message?: string } })?.error
+          ?.message ?? err.message;
 
-  const data = (await res.json()) as { values?: string[][] };
-  return parseSheetRows(data.values ?? []);
+      if (status === 400)
+        throw new Error(`Sheets: คำขอไม่ถูกต้อง — ${message}`);
+      if (status === 403)
+        throw new Error(`Sheets: API key ไม่มีสิทธิ์ — ${message}`);
+      if (status === 404)
+        throw new Error(`Sheets: ไม่พบ Spreadsheet — ${message}`);
+      throw new Error(`Sheets API error ${status}: ${message}`);
+    }
+    throw err;
+  }
+}
+
+const VALID_STATUSES: VehicleStatus[] = ["active", "idle", "offline"];
+const VALID_TYPES: VehicleType[] = [
+  "excavator",
+  "dump_truck",
+  "concrete_mixer",
+  "crane",
+  "roller",
+  "other",
+];
+
+function toStatus(raw: string): VehicleStatus {
+  const v = raw.trim().toLowerCase() as VehicleStatus;
+  return VALID_STATUSES.includes(v) ? v : "offline";
+}
+
+function toType(raw: string): VehicleType {
+  const v = raw.trim().toLowerCase() as VehicleType;
+  return VALID_TYPES.includes(v) ? v : "other";
 }
 
 function parseSheetRows(rows: string[][]): Vehicle[] {
@@ -23,8 +61,8 @@ function parseSheetRows(rows: string[][]): Vehicle[] {
       id: row[0] ?? "",
       name: row[1] ?? "",
       licensePlate: row[2] ?? "",
-      type: (row[3] as VehicleType) ?? "other",
-      status: (row[4] as VehicleStatus) ?? "offline",
+      type: toType(row[3] ?? ""),
+      status: toStatus(row[4] ?? ""),
       lat: parseFloat(row[5] ?? "0"),
       lng: parseFloat(row[6] ?? "0"),
       location: row[7] ?? "",

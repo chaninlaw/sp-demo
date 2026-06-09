@@ -7,6 +7,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { VEHICLE_COLORS, VEHICLE_LABELS } from "@/shared/lib/vehicle-colors";
+import { Empty, EmptyTitle } from "@/shared/ui/empty";
 import type { VehicleType } from "@/entities/vehicle";
 
 interface VehicleTypeChartProps {
@@ -24,9 +25,9 @@ export function VehicleTypeChart({ data }: VehicleTypeChartProps) {
 
   if (chartData.length === 0) {
     return (
-      <div className="flex items-center justify-center h-40 text-muted-foreground text-sm">
-        ไม่มีข้อมูลรถ
-      </div>
+      <Empty className="border-0 h-40">
+        <EmptyTitle className="text-sm">ไม่มีข้อมูลรถ</EmptyTitle>
+      </Empty>
     );
   }
 
@@ -41,6 +42,7 @@ export function VehicleTypeChart({ data }: VehicleTypeChartProps) {
           outerRadius={85}
           paddingAngle={3}
           dataKey="value"
+          strokeWidth={0}
         >
           {chartData.map((entry) => (
             <Cell key={entry.name} fill={entry.color} />
@@ -48,12 +50,25 @@ export function VehicleTypeChart({ data }: VehicleTypeChartProps) {
         </Pie>
         <Tooltip
           formatter={(value, name) => [value, name]}
-          contentStyle={{ fontSize: 12 }}
+          contentStyle={{
+            background: "oklch(0.17 0.009 55)",
+            border: "1px solid oklch(0.30 0.016 72 / 45%)",
+            borderRadius: "6px",
+            fontSize: 12,
+            color: "oklch(0.93 0.006 60)",
+            fontFamily: "var(--font-sans)",
+          }}
+          itemStyle={{ color: "oklch(0.93 0.006 60)" }}
+          cursor={false}
         />
         <Legend
           iconType="circle"
-          iconSize={10}
-          wrapperStyle={{ fontSize: 12 }}
+          iconSize={8}
+          wrapperStyle={{
+            fontSize: 11,
+            color: "oklch(0.52 0.012 60)",
+            fontFamily: "var(--font-sans)",
+          }}
         />
       </PieChart>
     </ResponsiveContainer>

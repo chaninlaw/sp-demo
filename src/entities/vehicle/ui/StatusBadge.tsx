@@ -1,22 +1,24 @@
-import { Badge } from "@/shared/ui/badge";
 import { cn } from "@/shared/lib/cn";
 import type { VehicleStatus } from "../model/vehicle";
 
 const STATUS_CONFIG: Record<
   VehicleStatus,
-  { label: string; className: string }
+  { label: string; dot: string; className: string }
 > = {
   active: {
     label: "ใช้งาน",
-    className: "bg-emerald-500/15 text-emerald-600 border-emerald-500/30",
+    dot: "bg-emerald-400",
+    className: "text-emerald-400 bg-emerald-400/10 border-emerald-400/25",
   },
   idle: {
     label: "รอการใช้งาน",
-    className: "bg-amber-500/15 text-amber-600 border-amber-500/30",
+    dot: "bg-primary",
+    className: "text-primary bg-primary/10 border-primary/25",
   },
   offline: {
     label: "ออฟไลน์",
-    className: "bg-slate-500/15 text-slate-600 border-slate-500/30",
+    dot: "bg-slate-500",
+    className: "text-slate-500 bg-slate-500/10 border-slate-500/25",
   },
 };
 
@@ -26,10 +28,17 @@ interface StatusBadgeProps {
 }
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {
-  const config = STATUS_CONFIG[status];
+  const config = STATUS_CONFIG[status] ?? STATUS_CONFIG.offline;
   return (
-    <Badge variant="outline" className={cn(config.className, className)}>
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold border tracking-wide uppercase",
+        config.className,
+        className,
+      )}
+    >
+      <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", config.dot)} />
       {config.label}
-    </Badge>
+    </span>
   );
 }

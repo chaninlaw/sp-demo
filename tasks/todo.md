@@ -43,7 +43,7 @@
 **Core:**
 
 ```bash
-bun add @tanstack/react-router @tanstack/router-devtools
+bun add @tanstack/react-router @tanstack/react-router-devtools
 bun add @tanstack/react-query @tanstack/react-query-devtools
 bun add react-router   # ไม่ต้อง — ใช้ TanStack Router แทน
 ```

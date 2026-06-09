@@ -10,6 +10,11 @@ export default defineConfig(({ mode }) => {
   return {
     server: {
       port: parseInt(env.VITE_PORT, 10) || 5173,
+      allowedHosts: ["sp-demo.projectplaceholders.com"],
+    },
+    preview: {
+      port: parseInt(env.VITE_PORT, 10) || 5173,
+      allowedHosts: ["sp-demo.projectplaceholders.com"],
     },
     plugins: [
       tanstackRouter({ target: "react", autoCodeSplitting: true }),

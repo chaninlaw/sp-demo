@@ -1,35 +1,49 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { cn } from "@/shared/lib/cn";
 
 interface StatCardProps {
   title: string;
   value: number | string;
-  icon?: string;
+  accent?: "amber" | "emerald" | "slate" | "red";
   className?: string;
   description?: string;
 }
 
+const ACCENT_STYLES = {
+  amber: "border-l-primary text-primary",
+  emerald: "border-l-emerald-400 text-emerald-400",
+  slate: "border-l-slate-500 text-slate-400",
+  red: "border-l-red-500 text-red-400",
+};
+
 export function StatCard({
   title,
   value,
-  icon,
+  accent = "amber",
   className,
   description,
 }: StatCardProps) {
   return (
-    <Card className={cn("", className)}>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-          {icon && <span>{icon}</span>}
-          {title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-2xl font-bold text-foreground">{value}</p>
-        {description && (
-          <p className="text-xs text-muted-foreground mt-1">{description}</p>
-        )}
-      </CardContent>
-    </Card>
+    <div
+      className={cn(
+        "bg-card border border-border border-l-2 rounded-lg px-4 py-3",
+        ACCENT_STYLES[accent],
+        className,
+      )}
+    >
+      <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-semibold mb-1">
+        {title}
+      </p>
+      <p
+        className="text-4xl font-black leading-none"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        {value}
+      </p>
+      {description && (
+        <p className="text-[10px] text-muted-foreground mt-1.5 tracking-wide">
+          {description}
+        </p>
+      )}
+    </div>
   );
 }
